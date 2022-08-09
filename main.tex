@@ -1,0 +1,296 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{multirow}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+
+\usepackage[a4paper,top=3cm,bottom=3cm,left=2.8cm,right=2.8cm,marginparwidth=1.75cm]{geometry}
+
+\title{VIM CheatSheet}
+\author{Lukas Kesch}
+
+\begin{document}
+
+%\pagecolor{black} 
+%\color{white}% set the default colour to white
+
+\maketitle
+\pagebreak
+\tableofcontents
+
+\section{Modes}
+\begin{tabular}{ r l }
+ CTRL C & \multirow{2}{10em}{Enter normal mode} \\[0.5ex]
+ ESC & \\[0.5ex]  
+ i & Enter insert mode before cursor\\[0.5ex]
+ I & Enter insert mode at the beginning of the line\\[0.5ex]
+ gi & Enter insert mode at the last place of an edit\\[0.5ex]
+ a & Enter insert mode after cursor\\[0.5ex]
+ A & Enter insert mode at the end of the line\\[0.5ex]
+ o & Create a new line under the current line and enter insert mode there\\[0.5ex]
+ O & Create a new line above the current line and enter insert mode there\\[0.5ex]
+ v & Enter visual character mode\\[0.5ex]
+ V & Enter visual line mode\\[0.5ex]
+ CTRL v & Enter visual block mode (Use I and A for insertion)\\[0.5ex]
+\end{tabular}
+
+
+\section{Movement}
+Note: Most Motions can be prefixed by a count. The count specifies how often the motion should be applied. If no count is given the motion will be applied once.
+\subsection{Horizontal Motions}
+
+\begin{tabular}{ r c l }
+ & 0 / g0 & Move to the beginning of the current real / wrapped line \\  [0.5ex]
+ & {}\^{} / g\^{} & Move to the first non blank character of the current real / wrapped line \\  [0.5ex]
+ & g\_ & Move to the last non blank character of the current line \\  [0.5ex]
+ & \$ / g\$ & Move to the end of the current real / wrapped line \\  [0.5ex]
+ \{column\} & $\mid$ & Move one to the given column \\[0.5ex]
+ \{count\} & h & Move one char to the left \\[0.5ex]
+ \{count\} & l & Move one char to the right  \\  [0.5ex]
+ \{count\} & f/F\{char\} & Move to the next/prior occurrence of char in the current line \\  [0.5ex]
+ \{count\} & t/T\{char\} & Move one char before the next/prior occurrence of char in the current line \\  [0.5ex]
+ \{count\} & ; & Repeat the last f/F or t/T command in the original direction\\  [0.5ex]
+ \{count\} & , & Repeat the last f/F or t/T command in the reversed direction \\  [0.5ex]
+\end{tabular}
+
+\subsection{Vertical Motions}
+\begin{tabular}{ r c l }
+ \{count\} & k/gk & Move up one real/wrapped line \\[0.5ex]
+ \{count\}  & j/gj & Move down one real/wrapped line \\[0.5ex]
+ \{count\} & - & Move up one line on the first non blank character (equals k\^{}) \\[0.5ex]
+ \{count\} & + & Move down one line on the first non blank character (equals j\^{}) \\[0.5ex]
+ \{percent\} & \% & Move to the line that is the given percent in the file\\[0.5ex]
+ \{lineNumber\} & gg & Move to the line with the given line number\\[0.5ex]
+ & gg & Move to the top of the file \\[0.5ex]
+ & H & Move cursor to the top of the screen\\[0.5ex]
+ & M & Move cursor to the middle of the screen\\[0.5ex]
+ & L & Move cursor to the bottom of the screen\\[0.5ex]
+ & G & Move to the bottom of the file \\[0.5ex]
+\end{tabular}
+
+
+\subsection{Text Object Motions}
+\begin{tabular}{ r l }
+ w/W & Move to the beginning of the next word/WORD \\  [0.5ex]
+ b/B & Move to the beginning of the current word/WORD\\  [0.5ex]
+ e/E & Move to the end of the current word/WORD\\  [0.5ex]
+ ge/gE & Move to the end of the prior word/WORD\\  [0.5ex]
+ ( or ) & Move up or down one sentence \\[0.5ex]
+ \{ or \} & Move up or down one paragraph \\[0.5ex]
+\end{tabular}
+
+\subsection{Pattern Search}
+\begin{tabular}{ r l }
+ /\{pattern\} Enter& Move to the next occurrences of the pattern (RegEx) in the file\\[0.5ex]
+ ?\{pattern\} Enter& Move to the previous occurrences of the pattern (RegEx) in the file\\[0.5ex]
+ / & Repeat the last / or ? command in the original direction\\[0.5ex]
+ ? & Repeat the last / or ? command in the reversed direction\\[0.5ex]
+ n & Jump to the next match of the last / or ? command\\[0.5ex]
+ N & Jump to the prior match of the last / or ? command\\[0.5ex]
+ * & Jump to the next occurrence of the word under the cursor\\[0.5ex]
+ \# & Jump to the previous occurrence of the word under the cursor\\[0.5ex]
+\end{tabular}
+
+\subsection{Marks}
+
+\begin{tabular}{r l}
+ m\{a-z\}/\{A-Z\} & Mark current position in the file/globally\\[0.5ex]
+ \`{}\{a-z\}/\{A-Z\} & Go to the given mark in the file/any file\\[0.5ex]
+ \`{}\{0-9\} & Go to the position vim was previously exited\\[0.5ex]
+ \`{}\`{} & Go to the position before the last jump\\[0.5ex]
+ \`{}. or '.& Go to the position of the last change in the file\\[0.5ex]
+\end{tabular}
+ 
+
+\subsection{Scrolling}
+\begin{tabular}{r r c l }
+ \{count\} & CTRL & y & Move screen one line up\\[0.5ex]
+ \{count\} & CTRL & e & Move screen down line down\\[0.5ex]
+ \{count\} & CTRL & u & Move screen and cursor up (default: Half a page)\\[0.5ex]
+ \{count\} & CTRL & d & Move screen and cursor down (default: Half a page)\\[0.5ex]
+ & & zz & Center screen height around cursor\\[0.5ex]
+ & & zt & Redraw current line at the bottom of the screen\\[0.5ex]
+ & & zb & Redraw current line at the bottom of the screen\\[0.5ex]
+\end{tabular}
+
+
+%\pagebreak
+\subsection{Special Motions}
+\begin{tabular}{ r l }
+ \% & Move to the matching symbol. Supported symbols are: () \{\} [ ] \\[0.5ex]
+ gd & Move to the definition of the word/function under the cursor\\[0.5ex]
+\end{tabular}
+
+\pagebreak
+\section{Operators}
+
+\subsection{Operators with Motion} \label{Operators with Motion}
+Note: Operators with motions need to be applied in the following two ways: \{operator\}\{count\}\{motion\} or
+\{count\}\{operator\}\{motion\}
+
+\vspace{3mm} 
+\begin{tabular}{ r l }
+ y & Yanks (copies) the text in the default register \\[0.5ex]
+ d & Calls y and deletes the text \\[0.5ex]
+ c & Calls d and switches to insert mode \\[0.5ex]
+ g\~ & Switch case of letters\\[0.5ex]
+ gu/gU & Make letters lower/upper case\\[0.5ex]
+\end{tabular}
+
+
+\subsection{Operators without Motions}
+Note: Operators with without motions need to be applied in the following way: \{count\}\{operator\}
+
+\vspace{3mm} 
+\begin{tabular}{ r l }
+ J / gJ & Joins the current line with the next with / without space \\[0.5ex]
+ x / X & Deletes the character under / before the cursor (is equivalent to dl/dh)\\[0.5ex]
+ r / R & Replace the character under the cursor / Enter replace mode\\[0.5ex]
+ s & Calls x and switches to insert mode (is equivalent to ch)\\[0.5ex]
+ p / P & Pastes the text from the default register behind/in front the cursor \\[0.5ex]
+ gp / gP & Same as p/P but moves the cursor to the end of the pasted text\\[0.5ex]
+ ]p / [p & Same as p/P but adjust the indentation to the current line\\[0.5ex]
+ yy or Y & Yanks the hole line to the default register \\[0.5ex]
+ dd / D & Deletes the whole line / rest of the line\\[0.5ex]
+ cc / C & Changes the whole / rest of the line\\[0.5ex]
+ u & Undo \\[0.5ex]
+ CTRL r & Redo \\[0.5ex]
+ . & Repeat the last operation \\[0.5ex]
+ \textless /\textgreater & Indent text to the left/right \\[0.5ex]
+ {}\~ & Switch case of letter under the cursor\\[0.5ex]
+ = & Format code \\[0.5ex]
+\end{tabular}
+
+\section{Text Objects}
+Note: Text Objects work together with Operators with Motions \ref{Operators with Motion} and have the following syntax: \{operator\}\{a or i\}\{textObject\}. The a stands for around and includes the white spaces around the text object. The i stands for inner and includes only the text inside the text object. 
+
+\vspace{3mm} 
+\begin{tabular}{ r l }
+ w & Word \\[0.5ex]
+ s & Sentence \\[0.5ex]
+ p & Paragraph \\[0.5ex]
+ t & Tag (e.g HTML-Tag)\\[0.5ex]
+ \`{} or ' or " & Quotes \\[0.5ex]
+ ( or ) or b & For () brackets \\[0.5ex]
+ \{ or \} or B  & For \{\} brackets \\[0.5ex]
+ [ or ]  & For [ ] brackets \\[0.5ex]
+ \textless \;or \textgreater  & For \textless \textgreater \;brackets \\[0.5ex]
+\end{tabular}
+
+\section{Registers}
+In Normal Mode the the content of all registers can be shown by activating the command bar with : and then typing the reg command. To view a specific register the command reg {regName} can be used. In order to put something in a register or paste something out of a register the following syntax is needed: 
+
+\vspace{3mm}
+\begin{tabular}{ r l }
+\multirow{2}{1.6em}{Put} & $"$\{nameOfRegister\}\{count\}\{X or C/cc or D/dd or Y/yy or s\} \\[0.5ex]
+ & $"$\{nameOfRegister\}\{x or c or d or y\}\{count + motion or textObject\} \\[1ex]
+ Paste & $"$\{nameOfRegister\}\{p/P\}\\[0.5ex]
+\end{tabular}
+
+\subsection{Named Registers}
+There are 26 named registers a-z. If the lower case letter is used for put operations the existing content will be overwritten with the new content. If the upper case letter is used the existing content will be appended by the new one.
+\subsection{Special Registers}
+
+\begin{tabular}{ r c l }
+ " & Default Register & All above mentioned operations will use the default register \\[0.5ex]
+ * & System Clipboard & Stores the text in the system clipboard\\[0.5ex]
+ 0 & Yank Register & The yank register saves the last content that was yanked (y/Y/yy)\\[0.5ex]
+ \multirow{3}{1.6em}{1-9} & \multirow{3}{6em}{Cut Register} & The cut content of the last 9 above mentioned operations is stored \\[0.5ex]
+ & &  in the registers. They are sorted chronological and the most recent \\[0.5ex]
+ & & one is in register 1.\\[0.5ex]
+ \end{tabular}
+
+
+\section{Macros}
+Macros are a sequence of operations stored in a named register. Macros have the following syntax:
+
+\vspace{3mm}
+\begin{tabular}{ r l }
+ record & q\{a, ..., z\}\{operations\}q  \\[0.5ex]
+ append & q\{A, ..., Z\}\{operations\}q  \\[0.5ex]
+ apply & \{count\}@\{namedRegister\}  \\[0.5ex]
+\end{tabular}
+
+
+\vspace{3mm}
+\noindent
+Note: Macros and therefore named registers can be easily edited by pasting their content in normal mode, edit the content in insert mode, and then overwrite the register with the edited version. 
+
+\section{Shortcuts}
+\begin{tabular}{ r c l }
+ CTRL & h & Delets the last typed character in insert mode\\[0.5ex]
+ CTRL & w & Delets the last typed word in insert mode\\[0.5ex]
+ CTRL & r + \{nameOfRegister\} & Pastes the content of the register in insert mode\\[0.5ex]
+\end{tabular}
+
+
+\section{Command Line}
+
+\section{Notable Combinations}
+\begin{tabular}{ r l }
+ yyp & Duplicates the current line \\[0.5ex]
+ ddp & Swaps the current line with the line below\\[0.5ex]
+ dlp/dhp & Swaps the current character under the cursor with the left/right character\\[0.5ex]
+\end{tabular} 
+
+\section{Neo VIM}
+Can be installed via homebrew. Needs a config folder in the .config directory (same as vim). 
+
+\section{Plugins}
+\subsection{Vim Plug}
+\href{https://github.com/junegunn/vim-plug}{Vim Plug} is a plugin manager for neovim. 
+Syntax in the init.vim file:
+
+call plug\#begin()
+
+Plug 'https://github.com/tpope/vim-surround'
+
+Plug 'https://github.com/vim-airline/vim-airline'
+
+call plug\#end()
+
+
+\noindent To install the plugins you need to run :PlugInstall inside NeoVim
+To uninstall a plugin remove it from the init.vim file save the file and then call :PlugClean inside neovim
+\subsection{Vim Surround}
+https://github.com/tpope/vim-surround
+
+\begin{tabular}{ r l }
+ ds\{surroundingChar\} & Deletes the surrounding Character\\[0.5ex]
+ cs\{old\}\{new\} & Changes the surrounding Character\\[0.5ex]
+ ys\{textObjext\}\{char\} & Surrounds the text object with the given char\\[0.5ex]
+ S\{char\}& Surrounds the text selected in visual mode with the given char\\[0.5ex]
+ \end{tabular} 
+ 
+\subsection{Vim Airline}
+Status line
+
+\subsection{NerdCommenter}
+Commenting out lines of code
+
+\subsection{Barber}
+Tab Manager
+
+\subsection{Nvim Treesitter}
+Better syntax highlighting
+
+\subsection{Telescope}
+Fuzzy finder
+
+\subsection{nightfox theme}
+Better nightmode theme for nvim
+
+\subsection{Hop}
+Move even faster through files
+
+\subsection{Undo Tree}
+ 
+
+
+
+\end{document}
